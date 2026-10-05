@@ -1,0 +1,11 @@
+EMPLOYEE PAYROLL & SALARY ANALYSIS REPORT
+========================================
+Average Net Salary: 54516.00
+Highest Paid Employee: Ravi - 70800.00
+Lowest Paid Employee: Vijay - 41300.00
+
+Department-wise Average Salary:
+Finance: 60573.33
+IT: 60180.00
+HR: 46020.00
+Marketing: 45430.00
