@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages %}
+    <div class="error-text flash-message" role="alert">{{ message }}</div>
+    {% endfor %}
+{% endwith %}
+
+<section class="hero">
+    <div>
+        <p class="eyebrow">Employee Payroll & Salary Analysis</p>
+        <h1>Payroll Management Dashboard</h1>
+        <p class="subtitle">Welcome, {{ current_user | title }}. Manage payroll records, salary trends, and department analysis from one place.</p>
+    </div>
+</section>
+
+<section class="summary-grid">
+    <div class="card">
+        <span>Average Net Salary</span>
+        <strong>₹{{ '%.2f' | format(summary.average_salary) }}</strong>
+    </div>
+    <div class="card">
+        <span>Highest Salary</span>
+        <strong>₹{{ '%.2f' | format(summary.highest_salary) }}</strong>
+    </div>
+    <div class="card">
+        <span>Lowest Salary</span>
+        <strong>₹{{ '%.2f' | format(summary.lowest_salary) }}</strong>
+    </div>
+    <div class="card">
+        <span>Total Net Salary</span>
+        <strong>₹{{ '%.2f' | format(summary.total_salary) }}</strong>
+    </div>
+</section>
+
+<section class="grid-two">
+    <div class="panel">
+        <h2>Add Employee</h2>
+        <form action="{{ url_for('add_employee') }}" method="post" class="employee-form">
+            <input type="number" name="Employee_ID" placeholder="Employee ID" required>
+            <input type="text" name="Name" placeholder="Employee Name" required>
+            <input type="text" name="Department" placeholder="Department" required>
+            <input type="number" step="0.01" name="Basic_Salary" placeholder="Basic Salary" required>
+            <button type="submit">Add Employee</button>
+        </form>
+    </div>
+
+    <div class="panel">
+        <h2>Search Employee</h2>
+        <form method="get" class="search-form">
+            <input type="text" name="search" value="{{ search }}" placeholder="Search by name, department or ID">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+</section>
+
+<section class="panel table-panel">
+    <div class="panel-header">
+        <h2>Employee Records</h2>
+        <span>{{ employees|length }} records</span>
+    </div>
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Department</th>
+                    <th>Basic</th>
+                    <th>HRA</th>
+                    <th>DA</th>
+                    <th>PF</th>
+                    <th>Gross</th>
+                    <th>Net</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for emp in employees %}
+                <tr>
+                    <td>{{ emp.Employee_ID }}</td>
+                    <td>{{ emp.Name }}</td>
+                    <td>{{ emp.Department }}</td>
+                    <td>₹{{ '%.2f' | format(emp.Basic_Salary) }}</td>
+                    <td>₹{{ '%.2f' | format(emp.HRA) }}</td>
+                    <td>₹{{ '%.2f' | format(emp.DA) }}</td>
+                    <td>₹{{ '%.2f' | format(emp.PF) }}</td>
+                    <td>₹{{ '%.2f' | format(emp.Gross_Salary) }}</td>
+                    <td>₹{{ '%.2f' | format(emp.Net_Salary) }}</td>
+                    <td class="actions-cell">
+                        <a class="edit-btn" href="{{ url_for('edit_employee', employee_id=emp.Employee_ID) }}">Edit</a>
+                        <form action="{{ url_for('delete_employee', employee_id=emp.Employee_ID) }}" method="post">
+                            <button type="submit" class="delete-btn">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

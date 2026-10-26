@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="hero small">
+    <div>
+        <p class="eyebrow">Visualization</p>
+        <h1>Combined Payroll Charts</h1>
+    </div>
+</section>
+
+<section class="analytics-grid">
+    <div class="panel chart-card">
+        <h2>Average Salary by Department</h2>
+        <img src="{{ url_for('bar_chart') }}" alt="Department average salary bar chart">
+    </div>
+    <div class="panel chart-card">
+        <h2>Department Salary Share</h2>
+        <img src="{{ url_for('pie_chart') }}" alt="Department salary pie chart">
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="login-page">
+    <div class="login-box">
+        <p class="eyebrow">PayWise Account</p>
+        <h1>Create Account</h1>
+        <p>Register to manage employee payroll and salary reports.</p>
+
+        {% if error %}
+        <div class="error-text">{{ error }}</div>
+        {% endif %}
+
+        <form method="post" class="login-form">
+            <div class="form-row">
+                <label class="label" for="username">Username</label>
+                <input id="username" name="username" type="text" autocomplete="username" placeholder="Choose a username" required>
+            </div>
+
+            <div class="form-row">
+                <label class="label" for="password">Password</label>
+                <input id="password" name="password" type="password" autocomplete="new-password" minlength="8" placeholder="At least 8 characters" required>
+            </div>
+
+            <div class="form-row">
+                <label class="label" for="confirm_password">Confirm password</label>
+                <input id="confirm_password" name="confirm_password" type="password" autocomplete="new-password" placeholder="Enter password again" required>
+            </div>
+
+            <button type="submit">Create Account</button>
+        </form>
+
+        <p class="auth-switch">Already registered? <a href="{{ url_for('login') }}">Sign in</a></p>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="hero small report-hero">
+    <div>
+        <p class="eyebrow">Salary Analytics</p>
+        <h1>Department-wise Salary Summary</h1>
+    </div>
+    <a class="export-btn" href="{{ url_for('export_payroll') }}">Download Payroll CSV</a>
+</section>
+
+<section class="summary-grid report-grid">
+    <div class="card">
+        <span>Average Net Salary</span>
+        <strong>₹{{ '%.2f' | format(summary.average_salary) }}</strong>
+    </div>
+    <div class="card">
+        <span>Highest Salary</span>
+        <strong>₹{{ '%.2f' | format(summary.highest_salary) }}</strong>
+    </div>
+    <div class="card">
+        <span>Lowest Salary</span>
+        <strong>₹{{ '%.2f' | format(summary.lowest_salary) }}</strong>
+    </div>
+</section>
+
+<section class="analytics-grid">
+    <div class="panel chart-card">
+        <h2>Average Salary by Department</h2>
+        <img src="{{ bar_chart_url }}" alt="Department average salary bar chart">
+    </div>
+
+    <div class="panel chart-card">
+        <h2>Department Salary Share</h2>
+        <img src="{{ pie_chart_url }}" alt="Department salary pie chart">
+    </div>
+</section>
+
+<section class="panel">
+    <h2>Detailed Department Report</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Department</th>
+                <th>Average Net Salary</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in departments %}
+            <tr>
+                <td>{{ item.Department }}</td>
+                <td>₹{{ '%.2f' | format(item.Average_Net_Salary) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}
